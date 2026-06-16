@@ -1,27 +1,25 @@
 //
-//  BooksView.swift
+//  DogsView.swift
 //  working with data
 //
 //  Created by Ar Kar Lin on 6/16/26.
 //
-
 import SwiftUI
 
-struct BooksView: View {
-    @State var oo = BookOO()
-
+struct DogsView: View {
+    @State private var oo = DogsOO()
     var body: some View {
-        List(oo.data) { book in
-            Text(book.name)
+        List(oo.data) { datum in
+            Text(datum.name)
         }
         .font(.title)
-        .onAppear{
+        .onAppear {
             oo.fetch()
         }
-        
     }
 }
 
+
 #Preview {
-    BooksView(oo: MockBookOO())
+    DogsView()
 }
