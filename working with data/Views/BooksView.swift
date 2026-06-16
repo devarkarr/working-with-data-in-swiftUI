@@ -8,9 +8,20 @@
 import SwiftUI
 
 struct BooksView: View {
+    @State private var name = "Arkar"
+    @State private var names = ["Mark", "Lem", "Rod"]
     @State var oo = BookOO()
 
     var body: some View {
+        
+        EditNameSubview(name: $name)
+        
+        List($names, id: \.self) { $n in
+            NavigationLink(n) {
+            EditNameSubview(name: $n)
+            }
+        }
+        
         List(oo.data) { book in
             Text(book.name)
         }
@@ -19,6 +30,13 @@ struct BooksView: View {
             oo.fetch()
         }
         
+    }
+}
+
+struct EditNameSubview: View {
+    @Binding var name: String
+    var body: some View {
+        TextField("Name", text: $name)
     }
 }
 
