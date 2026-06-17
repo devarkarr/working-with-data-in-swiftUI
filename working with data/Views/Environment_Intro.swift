@@ -13,6 +13,11 @@ class DeveloperOO {
     var name: String = "Awesome developer"
 }
 
+@Observable
+class AddressOO {
+    var state = "Vermont"
+}
+
 
 struct Environment_Intro: View {
     var body: some View {
@@ -23,6 +28,8 @@ struct Environment_Intro: View {
             .navigationTitle("Developer")
         }
         .environment(DeveloperOO())
+        
+        Environment_ReadOnly().environment(AddressOO())
         .font(.title)
     }
 }
@@ -34,6 +41,29 @@ struct DeveloperView: View {
         .navigationTitle("Developer View")
     }
 }
+
+
+struct Environment_ReadOnly: View {
+    @Environment(AddressOO.self) private var addressOO
+
+    var body: some View {
+        Form {
+            
+            @Bindable var addressBindable = addressOO
+            
+            Section("One-Way Binding:") {
+
+                Text("State: \(addressOO.state)")
+                .bold()
+            }
+            Section("Two-Way Binding:") {
+                TextField("Enter State", text: $addressBindable.state)
+            }
+        }
+        .headerProminence(.increased)
+    }
+}
+
 
 
 #Preview {
